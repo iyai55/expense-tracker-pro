@@ -1,0 +1,151 @@
+.app-header-login {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f7f6;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.login-box h1 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.login-box span {
+  display: block;
+  margin-bottom: 24px;
+  color: #6b7280;
+}
+
+.login-box form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.login-box input {
+  padding: 10px 12px;
+  margin: 6px 0 16px;
+  border: 1px solid #9ca3af;
+  border-radius: 6px;
+}
+
+.login-box button {
+  padding: 11px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: #169b67;
+  color: white;
+  cursor: pointer;
+}
+
+.login-box .register-button {
+  display: inline;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #2563eb;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-box .register-button:hover {
+  color: #1d4ed8;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+.register-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.register-modal h1 {
+  margin: 0 0 24px;
+  font-size: 2rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.register-modal form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.register-modal input {
+  padding: 10px 12px;
+  margin: 6px 0 16px;
+
+  border: 1px solid #9ca3af;
+  border-radius: 6px;
+}
+
+.register-modal button[type="submit"] {
+  padding: 11px;
+  margin-top: 8px;
+
+  border: none;
+  border-radius: 6px;
+  background-color: #169b67;
+  color: white;
+  cursor: pointer;
+}
+
+.register-modal .close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 34px;
+  height: 34px;
+  padding: 0;
+
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.register-modal .close-button:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}

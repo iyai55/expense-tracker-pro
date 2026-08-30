@@ -6,10 +6,14 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from ai_service import parse_expense
 from flask_cors import CORS
 
+MAX_EXPENSE_TEXT_LENGTH = 300
+
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app, origins=["http://localhost:5174"])
-
+CORS(app, origins=[
+    "http://localhost:5173",
+    "http://localhost:5174"
+])
 db.init_app(app)
 jwt = JWTManager(app)
 
@@ -174,6 +178,11 @@ def ai_parse_expense():
     if not text:
         return jsonify({
             "message": "All fields are required"
+        }), 400
+
+    if len(text) > MAX_EXPENSE_TEXT_LENGTH:
+        return jsonify({
+            "message": f"Text cannot exceed {MAX_EXPENSE_TEXT_LENGTH} characters"
         }), 400
 
     current_user_id = int(get_jwt_identity())

@@ -154,3 +154,25 @@
     color: #697782;
     font-size: 14px;
 }
+
+.expense-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.delete-expense-button {
+    padding: 8px 14px;
+    border: 1px solid #dc3545;
+    border-radius: 8px;
+    background-color: white;
+    color: #dc3545;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.delete-expense-button:hover {
+    background-color: #dc3545;
+    color: white;
+}

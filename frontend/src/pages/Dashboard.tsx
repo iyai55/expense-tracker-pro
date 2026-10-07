@@ -17,6 +17,27 @@ function Dashboard() {
     const [expenses, setExpenses] = useState<Expense[]>([]);
     const [expenseText, setExpenseText] = useState("")
     const token = localStorage.getItem("access_token")
+
+    const handleDeleteExpense = async (expenseId: number) => {
+        const response = await fetch(`http://127.0.0.1:5000/expenses/${expenseId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+
+            },
+
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+            await loadExpenses()
+        }
+        else {
+            alert(data.message)
+        }
+
+    }
+
     const loadExpenses = async () => {
         const response = await fetch('http://127.0.0.1:5000/expenses', {
             method: 'GET',
@@ -75,8 +96,6 @@ function Dashboard() {
             alert(data.message)
         }
 
-
-
     }
 
     return (
@@ -103,14 +122,20 @@ function Dashboard() {
 
 
                     {expenses.map((expense) => (
-                        <div className="expense-card" key={expense.id} >
-                            <p className="expense-merchant">
-                                {expense.merchant}
-                            </p>
-                            <span className="expense-amount">
-                                ${expense.amount}
-                            </span>
+                        <div className="expense-card" key={expense.id}>
+                            <div className="expense-merchant">{expense.merchant}</div>
 
+                            <div className="expense-actions">
+                                <span className="expense-amount">${expense.amount}</span>
+
+                                <button
+                                    type="button"
+                                    className="delete-expense-button"
+                                    onClick={() => handleDeleteExpense(expense.id)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     ))}
 

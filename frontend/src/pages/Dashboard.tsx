@@ -1,5 +1,6 @@
 
 import { useEffect } from "react"
+import { useNavigate } from "react-router";
 import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import "./Dashboard.css"
 
@@ -17,6 +18,13 @@ function Dashboard() {
     const [expenses, setExpenses] = useState<Expense[]>([]);
     const [expenseText, setExpenseText] = useState("")
     const token = localStorage.getItem("access_token")
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("access_token");
+        navigate("/");
+    };
+
 
     const handleDeleteExpense = async (expenseId: number) => {
         const response = await fetch(`http://127.0.0.1:5000/expenses/${expenseId}`, {
@@ -46,6 +54,13 @@ function Dashboard() {
             },
 
         });
+
+        if (response.status === 401) {
+
+            localStorage.removeItem("access_token");
+            navigate("/");
+            return;
+        }
         const data = await response.json();
 
         if (response.ok) {
@@ -93,18 +108,34 @@ function Dashboard() {
             await loadExpenses()
         }
         else {
-            alert(data.message)
+            alert(data.message || data.error || data.msg || "Could not add expense.")
         }
 
     }
+
+    const initialValue = 0;
+    const totalSpending = expenses.reduce(
+        (total, expense) => total + expense.amount,
+        initialValue,
+    );
 
     return (
         <>
             <div className="dashboard-page">
                 <div className="dashboard-container">
+                    <button
+                        type="button"
+                        className="logout-button"
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>
+
                     <div className="summary-card">Total transactions: {expenses.length}</div>
+                    <div>Total spending: ${totalSpending.toFixed(2)}</div>
                     {expenses.length === 0 && (
                         <div className="empty-message">No expense yet.</div>
+
                     )}
 
                     <h2>Add an expense</h2>
@@ -123,10 +154,12 @@ function Dashboard() {
 
                     {expenses.map((expense) => (
                         <div className="expense-card" key={expense.id}>
-                            <div className="expense-merchant">{expense.merchant}</div>
+                            <div className="expense-merchant">{expense.merchant || "Unknown merchant"}</div>
+                            <div className="expense-category">{expense.category}</div>
+                            <div className="expense-description">{expense.description}</div>
 
                             <div className="expense-actions">
-                                <span className="expense-amount">${expense.amount}</span>
+                                <span className="expense-amount">${expense.amount.toFixed(2)}</span>
 
                                 <button
                                     type="button"
